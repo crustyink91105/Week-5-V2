@@ -6,7 +6,8 @@
     "projects/*"
   ],
   "scripts": {
-    "serve": "bun --hot ./server.ts"
+    "serve": "bun --hot ./server.ts",
+    "typecheck": "bun check"
   },
   "dependencies": {
     "@babylonjs/core": "^9.32.0",
