@@ -22,8 +22,8 @@ import {
   }
   
   function createSphere(scene: Scene) {
-    let sphere = MeshBuilder.CreateTorus(
-      "Torus",
+    let sphere = MeshBuilder.CreateSphere(
+      "sphere",
       { diameter: 2, segments: 32 },
       scene,
     );
@@ -32,7 +32,7 @@ import {
   }
   
   function createGround(scene: Scene) {
-    let ground = MeshBuilder.CreateSurface(
+    let ground = MeshBuilder.CreateGround(
       "ground",
       { width: 6, height: 6 },
       scene,

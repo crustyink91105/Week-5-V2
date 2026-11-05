@@ -93,15 +93,15 @@ function createSphere(scene: Scene) {
   sphere.position.y = 1.5;
   return sphere;
 }
-function createCylinder(scene: Scene) {
-  let cylinder = MeshBuilder.CreateCylinder(
-    "cylinder",
-    { diameter: 1, height: 2, tessellation: 32 },
+function createTorus(scene: Scene) {
+  let torus  = MeshBuilder.CreateTorus(
+    "torus",
+    { diameter: 1, thickness: 0.5, tessellation: 32 },
     scene
   );
-  cylinder.position.y = 3.5;
-  cylinder.position.x = -2.5;
-  return cylinder;
+  torus.position.y = 3.5;
+  torus.position.x = -2.5;
+  return torus;
 }
 
 function createGround(scene: Scene) {
@@ -142,7 +142,7 @@ export default function createStartScene(engine: Engine) {
   let lightSpot = createSpotLight(scene);
   let lightHemispheric = createHemisphericLight(scene);
   let sphere = createSphere(scene);
-  let cylinder = createCylinder(scene);
+  let torus = createTorus(scene);
   let ground = createGround(scene);
   let camera = createArcRotateCamera(scene);
   let shadowGenerator = createShadows(lightDirectional, sphere, box);
@@ -155,7 +155,7 @@ export default function createStartScene(engine: Engine) {
     lightSpot,
     lightHemispheric,
     sphere,
-    cylinder,
+    torus,
     ground,
     camera,
     shadowGenerator,
