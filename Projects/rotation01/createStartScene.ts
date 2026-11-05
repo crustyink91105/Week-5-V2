@@ -14,14 +14,16 @@ import {
   Color3,
   ShadowGenerator,
   Engine,
+  Plane,
 } from "@babylonjs/core";
 
 function createBox(scene:Scene) {
   let box = MeshBuilder.CreateBox("box", {size: 1}, scene);
-  box.position.y = 3;
-  box.position.y = 0.51;
+  box.position.y = 4;
+  box.position.z = 2.5;
   return box;
 }
+
 
 function createPointLight(scene: Scene) {
   const light = new PointLight("light", new Vector3(-1, 1, 0), scene);
@@ -69,10 +71,11 @@ function createHemisphericLight(scene: Scene) {
   return light;
 }
 
-function createShadows(light: DirectionalLight, sphere: Mesh, box: Mesh) {
+function createShadows(light: DirectionalLight, sphere: Mesh, box: Mesh, torus: Mesh, cylinder: Mesh) {
   const shadower = new ShadowGenerator(1024, light);
   const shadowmap: any = shadower.getShadowMap();
-  shadowmap.renderList.push(sphere, box);
+  shadowmap.renderList.push(sphere, box, torus, cylinder);
+
 
   shadower.setDarkness(0.2);
   shadower.useBlurExponentialShadowMap = true;
@@ -93,21 +96,43 @@ function createSphere(scene: Scene) {
   sphere.position.y = 1.5;
   return sphere;
 }
-function createTorus(scene: Scene) {
-  let torus  = MeshBuilder.CreateTorus(
-    "torus",
-    { diameter: 1, thickness: 0.5, tessellation: 32 },
+function createCylinder1(scene: Scene) {
+  let cylinder = MeshBuilder.CreateCylinder(
+    "cylinder1",
+    { diameter: 1, height: 4, tessellation: 32 },
     scene
   );
-  torus.position.y = 3.5;
-  torus.position.x = -2.5;
+  cylinder.position.y = 3.5;
+  cylinder.position.x = -2.5;
+  return cylinder;
+}
+
+function createCylinder(scene: Scene) {
+  let cylinder = MeshBuilder.CreateCylinder(
+    "cylinder",
+    { diameter: 1, height: 2, tessellation: 32,},
+    scene
+  );
+  cylinder.position.y = 3.5;
+  cylinder.position.x = -2.5;
+  return cylinder;
+}
+function createTorus(scene: Scene) {
+  let torus = MeshBuilder.CreateTorus(
+    "torus",
+    { diameter: 1, thickness: 0.25, tessellation: 32 },
+    scene
+  );
+  torus.position.y = 1.5;
+  torus.position.x = 2.5;
   return torus;
 }
+
 
 function createGround(scene: Scene) {
   let ground = MeshBuilder.CreateGround(
     "ground",
-    { width: 6, height: 6 },
+    { width: 18, height: 18 },
     scene
   );
   var groundMaterial = new StandardMaterial("groundMaterial", scene);
@@ -142,10 +167,11 @@ export default function createStartScene(engine: Engine) {
   let lightSpot = createSpotLight(scene);
   let lightHemispheric = createHemisphericLight(scene);
   let sphere = createSphere(scene);
-  let torus = createTorus(scene);
+  let cylinder = createCylinder(scene);
   let ground = createGround(scene);
   let camera = createArcRotateCamera(scene);
-  let shadowGenerator = createShadows(lightDirectional, sphere, box);
+  let torus = createTorus(scene);
+  let shadowGenerator = createShadows(lightDirectional, sphere, box, torus, cylinder);
 
   let that: SceneData = {
     scene,
@@ -155,10 +181,11 @@ export default function createStartScene(engine: Engine) {
     lightSpot,
     lightHemispheric,
     sphere,
-    torus,
+    cylinder,
     ground,
     camera,
     shadowGenerator,
+    torus,
   };
   return that;
 }

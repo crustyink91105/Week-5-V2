@@ -21,4 +21,5 @@ export interface SceneData {
   ground: Mesh;
   camera: Camera;
   shadowGenerator: ShadowGenerator;
+  torus: Mesh;
 }

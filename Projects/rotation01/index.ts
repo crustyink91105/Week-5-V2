@@ -7,8 +7,8 @@ const CanvasName = "renderCanvas";
 
 let canvas = document.createElement("canvas");
 canvas.id = CanvasName;
-canvas.width = 800;   // Set internal resolution
-canvas.height = 400;
+canvas.width = 1000;   // Set internal resolution
+canvas.height = 800;
 
 canvas.classList.add("background-canvas");
 document.body.style.display = "flex";

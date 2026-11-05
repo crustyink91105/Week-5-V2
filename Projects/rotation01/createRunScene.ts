@@ -9,6 +9,10 @@ let boxSpeed: number = 0.01;
 let cylinderAngle: number = 0.3;
 let cylinderSpeed: number = 0.01;
 
+let torusAngle: number = 0.3;
+let torusSpeed: number = 0.025;
+
+
 // move light in ellipse and cycle luma
 let lightAngle: number = 0;
 let lightSpeed: number = 0.005;
@@ -22,6 +26,8 @@ let verticalRangeY: number = 0.3;
 let boxPositionY: number = 4;
 let CylinderPositionY: number = 1.5;
 let spherePositionY: number = 1.5;
+let TorusPositionY: number = 1.5;
+let groundPositionY: number = 0.5;
 
 export default function createRunScene(runScene: SceneData) {
   runScene.scene.onAfterRenderObservable.add(() => {
@@ -37,6 +43,12 @@ export default function createRunScene(runScene: SceneData) {
       axis,
       boxAngle * 2 * Math.PI
     );
+    //rotate torus
+    const torusaxis: Vector3 = new Vector3(0, 1, 2).normalize();
+    const torusquat: Quaternion = Quaternion.RotationAxis(
+      torusaxis,
+      torusAngle * 2 * Math.PI
+    );
 
   
     
@@ -49,6 +61,10 @@ export default function createRunScene(runScene: SceneData) {
     runScene.cylinder.rotationQuaternion = cylquat;
     cylinderAngle += cylinderSpeed;
     cylinderAngle %= 1;
+
+    runScene.torus.rotationQuaternion = torusquat;
+    torusAngle += torusSpeed;
+    torusAngle %= 5;
 
     // move light in ellipse  and cycle luma
     runScene.lightSpot.position = new Vector3(
@@ -71,10 +87,6 @@ export default function createRunScene(runScene: SceneData) {
 
     runScene.cylinder.position.y =
       spherePositionY - verticalRangeY * Math.sin(verticalAngle * 2 * Math.PI);
-    
 
-
-
-    
   });
 }
